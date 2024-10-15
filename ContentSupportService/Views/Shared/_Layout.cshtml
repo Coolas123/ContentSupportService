@@ -1,0 +1,76 @@
+﻿@using WEB;
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cactus</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <div class="navbar-left">
+                <ul class="navbar-nav">
+                    <li>
+                        <img src="~/cactusLogo.png" width="50px" height="50px" />
+                    </li>
+                    <li>
+                        <a class="navbar-brand" asp-page="/FAQ">FAQ</a>
+                    </li>
+                    <li>
+                        <a class="navbar-brand" asp-Controller="NewsFeed" asp-action="Index">Лента</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-right" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated) {
+                        <!--await Component.InvokeAsync("Wallet")-->
+                        <li class="nav-item dropdown">
+                            <a class="navbar-brand dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <!--await Component.InvokeAsync("AvatarPath", html = "class=\"avatar\"" })-->
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                @if (User.IsInRole("Patron")) {
+                                    <!--<li><a class="dropdown-item" asp-controller="Patron" asp-action="Index" asp-route-id="Convert.ToInt32(@User.FindFirst("Id").Value)">Профиль</a></li>-->
+                                }
+                                else @if (User.IsInRole("Author")) {
+                                    <!--<li>await Component.InvokeAsync("UrlPath", new { id = Convert.ToInt32(User.FindFirst("Id").Value), html = "class=\"dropdown-item\"" })</li>-->
+                                }
+                                <li><a class="dropdown-item" asp-controller="Setting" asp-action="Index">Настройки</a></li>
+                                <li><a class="dropdown-item" asp-page="/UninterestingAuthor">Серый список</a></li>
+                                <li><a class="dropdown-item" asp-controller="wallet" asp-action="index">Кошелек</a></li>
+                                @if (User.IsInRole("Author")) {
+                                    <li><a class="dropdown-item" asp-controller="monetization" asp-action="index">Монетизация</a></li>
+                                }
+                                <li><a class="dropdown-item" asp-controller="user" asp-action="logOut">Выйти</a></li>
+                            </ul>
+                        </li>
+                    }
+                    <li>
+                        <ul class="navbar-nav">
+                            @if (!User.Identity.IsAuthenticated) {
+                                <li><a class="navbar-brand" asp-controller="user" asp-action="login" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">Войти</a></li>
+                                <li><a class="navbar-brand" asp-controller="user" asp-action="registration" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">Зарегистрироваться</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div>
+        @RenderSection("Scripts", required: false)
+        @RenderBody()
+    </div>
+    <script src="~/js/site.js"></script>
+    <style>
+        .avatar {
+            vertical-align: middle;
+            border-radius: 50%;
+        }
+    </style>
+</body>
+
+</html>

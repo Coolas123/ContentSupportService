@@ -1,0 +1,53 @@
+﻿@using Application.Users.Commands.RegisterPatronAndWallet
+@using Domain.Enums
+@model RegisterPatronAndWalletCommand
+
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+    </div>
+    <div class="col-lg-4 text-left">
+        <h3>Регистрация</h3>
+        <form asp-action="registration" method="post" class="mw-50 mx-auto">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="returnUrl" value="@Model.RegisterUserCommand.ReturnUrl" />
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.UserName"></label>
+                <input class="form-control" asp-for="RegisterUserCommand.UserName" placeholder="Введите прозвище" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.DateOfBirth"></label>
+                <input type="date" class="form-control" asp-for="RegisterUserCommand.DateOfBirth" placeholder="Введите дату рождения" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.Gender"></label>
+                <label class="radio-inline">
+                    <input type="radio" asp-for="RegisterUserCommand.Gender" value="Мужской" />
+                    Мужской
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" asp-for="RegisterUserCommand.Gender" value="Женский" />
+                    Женский
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.Country"></label>
+                <select asp-for="RegisterUserCommand.Country" asp-items="Html.GetEnumSelectList<Country>()"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.Password"></label>
+                <input class="form-control" asp-for="RegisterUserCommand.Password" placeholder="Введите пароль" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.ConfirmPassword"></label>
+                <input class="form-control" asp-for="RegisterUserCommand.ConfirmPassword" placeholder="Повторите пароль" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RegisterUserCommand.Email"></label>
+                <input class="form-control" asp-for="RegisterUserCommand.Email" placeholder="Введите почту" />
+            </div>
+            <button type="submit" class="btn btn-success m-2">Зарегистрироваться</button>
+        </form>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
